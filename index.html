@@ -1,1 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Helpful Links & Phone Numbers | New Mexico Move‑In Directory</title>
+  <style>
+    :root { --ink:#000000; --ink2:#374151; --gold:#c4a95e; --bg:#f8fafc; --card:#ffffff; --muted:#6b7280; --ring:#e5e7eb; }
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+    a{color:#0f766e;text-decoration:none} a:hover{text-decoration:underline}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .hero{display:grid;gap:10px;padding:28px 0}
+    .hero h1{font-weight:800;font-size:clamp(26px,4vw,38px);margin:0}
+    .hero p{margin:0;color:var(--ink2)}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px}
+    .tab{padding:8px 12px;border:1px solid var(--ring);border-radius:999px;background:var(--card);cursor:pointer}
+    .tab.active{background:var(--gold);border-color:var(--gold);color:#fff}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+    .col{grid-column:span 12}
+    @media (min-width:900px){.col-6{grid-column:span 6}}
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:14px;padding:14px}
+    .card h3{margin:0 0 6px;font-size:18px}
+    .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px dashed var(--ring)}
+    .row:first-of-type{border-top:0}
+    .label{font-weight:600}
+    .muted{color:var(--muted)}
+    .section-title{margin:18px 0 10px;font-size:20px}
+    .disclaimer{background:#fffbeb;border:1px solid #fde68a;color:#78350f;padding:10px;border-radius:12px;margin-top:18px}
+    .search{width:100%;padding:10px;border:1px solid var(--ring);border-radius:10px;margin:6px 0 14px}
+    .kicker{font-size:13px;color:var(--muted)}
+    .fine{font-size:12px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <p class="kicker">One‑stop local directory for new homeowners & renters</p>
+      <h1>Helpful Links & Phone Numbers</h1>
+      <p>Choose your city or county to see utilities, city/county sites, school districts, trash & recycling, and more. Data changes—always confirm on the official site.</p>
+      <input id="quickSearch" class="search" placeholder="Quick search (e.g., 'water', 'trash', 'APS', 'gas')" />
+      <nav class="tabs" id="cityTabs" aria-label="Cities"></nav>
+    </header>
 
+    <section id="directory"></section>
+
+    <div class="disclaimer">
+      <strong>Note:</strong> Some phone numbers and vendors vary by neighborhood or service area. If a phone is missing, follow the website link and check the "Contact" page for the most current number.
+    </div>
+
+    <p class="fine">© <span id="yr"></span> Jason L Jenkins • Century 21 Camco Realty • Albuquerque, NM</p>
+  </div>
+
+  <script>
+    document.addEventListener ('DOMContentLoaded', () => {
+      const data = {
+      "Albuquerque, Bernalillo County": {
+        "City & County": [
+          { name: "City of Albuquerque", url: "https://www.cabq.gov/", phone: "(505) 768-2000" },
+          { name: "Bernalillo County", url: "https://www.bernco.gov/", phone: "(505) 468-7777" }
+        ],
+        "Utilities": [
+          { name: "PNM Electric", url: "https://www.pnm.com/", phone: "(888) 342-5766" },
+          { name: "NM Gas Company", url: "https://www.nmgco.com/", phone: "(888) 664-2726" },
+          { name: "ABCWUA (Water)", url: "https://www.abcwua.org/", phone: "(505) 842-9287" }
+        ]
+      },
+      "Rio Rancho, Sandoval County": {
+        "City & County": [
+          { name: "City of Rio Rancho", url: "https://www.rrnm.gov/", phone: "(505) 891-5000" },
+          { name: "Sandoval County", url: "https://www.sandovalcountynm.gov/", phone: "(505) 867-7500" }
+        ]
+      },
+      "Socorro, Socorro County": {
+        "City & County": [
+          { name: "City of Socorro", url: "https://www.socorronm.gov/", phone: "(575) 835-0240" },
+          { name: "Socorro County", url: "https://www.socorrocounty.net/", phone: "(575) 835-0589" }
+        ],
+        "Utilities": [
+          { name: "Socorro Electric Cooperative", url: "https://www.socorroelectric.com/", phone: "(575) 835-0560" }
+        ]
+      },
+      "Edgewood, Torrance County": {
+        "City & County": [
+          { name: "Town of Edgewood", url: "https://www.edgewood-nm.gov/", phone: "(505) 286-4518" },
+          { name: "Torrance County", url: "https://www.torrancecountynm.org/", phone: "(505) 246-4200" }
+        ],
+        "Utilities": [
+          { name: "Central NM Electric Cooperative", url: "https://www.cnmec.org/", phone: "(505) 832-4483" },
+          { name: "Private Wells (Most Homes)", url: "https://www.google.com/search?q=Edgewood+NM+well+drilling+companies", phone: "", notes: "Most homes use private wells; contact a licensed well service company for testing or maintenance." }
+        ]
+      },
+      "Moriarty, Torrance County": {
+        "City & County": [
+          { name: "City of Moriarty", url: "https://www.cityofmoriarty.org/", phone: "(505) 832-4406" },
+          { name: "Torrance County", url: "https://www.torrancecountynm.org/", phone: "(505) 246-4200" }
+        ],
+        "Utilities": [
+          { name: "Central NM Electric Cooperative", url: "https://www.cnmec.org/", phone: "(505) 832-4483" },
+          { name: "Private Wells (Most Homes)", url: "https://www.google.com/search?q=Moriarty+NM+well+drilling+companies", phone: "", notes: "Most homes use private wells; contact a licensed well service company for testing or maintenance." }
+        ]
+      },
+      "Belen, Valencia County": {
+        "City & County": [
+          { name: "City of Belen", url: "https://www.belen-nm.gov/", phone: "(505) 966-2730" },
+          { name: "Valencia County", url: "https://www.co.valencia.nm.us/", phone: "(505) 866-2000" }
+        ],
+        "Utilities": [
+          { name: "Socorro Electric Cooperative", url: "https://www.socorroelectric.com/", phone: "(575) 835-0560" },
+          { name: "PNM Electric", url: "https://www.pnm.com/", phone: "(888) 342-5766" },
+          { name: "NM Gas Company", url: "https://www.nmgco.com/", phone: "(888) 664-2726" },
+          { name: "City of Belen Utilities", url: "https://www.belen-nm.gov/departments/public-works/water-department/", phone: "(505) 966-2730" }
+        ]
+      },
+      "Los Lunas, Valencia County": {
+        "City & County": [
+          { name: "Village of Los Lunas", url: "https://www.loslunasnm.gov/", phone: "(505) 839-3840" },
+          { name: "Valencia County", url: "https://www.co.valencia.nm.us/", phone: "(505) 866-2000" }
+        ],
+        "Utilities": [
+          { name: "Socorro Electric Cooperative", url: "https://www.socorroelectric.com/", phone: "(575) 835-0560" },
+          { name: "PNM Electric", url: "https://www.pnm.com/", phone: "(888) 342-5766" },
+          { name: "NM Gas Company", url: "https://www.nmgco.com/", phone: "(888) 664-2726" },
+          { name: "Los Lunas Utilities (Water)", url: "https://www.loslunasnm.gov/112/Utilities", phone: "(505) 352-7630" }
+        ]
+      },
+      "Rio Communities, Valencia County": {
+        "City & County": [
+          { name: "City of Rio Communities", url: "https://www.riocommunities.net/", phone: "(505) 861-6803" },
+          { name: "Valencia County", url: "https://www.co.valencia.nm.us/", phone: "(505) 866-2000" }
+        ],
+        "Utilities": [
+          { name: "Socorro Electric Cooperative", url: "https://www.socorroelectric.com/", phone: "(575) 835-0560" },
+          { name: "PNM Electric", url: "https://www.pnm.com/", phone: "(888) 342-5766" },
+          { name: "NM Gas Company", url: "https://www.nmgco.com/", phone: "(888) 664-2726" },
+          { name: "NM Water Service (Water)", url: "https://www.newmexicowater.com/", phone: "(888) 732-0198" }
+        ]
+      }
+    };
+
+     const cities = Object.keys(data);
+    const tabEl = document.getElementById('cityTabs');
+    const dirEl = document.getElementById('directory');
+
+    function renderTabs(active){
+      tabEl.innerHTML = '';
+      cities.forEach(c => {
+        const b = document.createElement('button');
+        b.className = 'tab' + (c===active?' active':'');
+        b.textContent = c;
+        b.onclick = ()=> render(c);
+        tabEl.appendChild(b);
+      });
+    }
+
+    function render(city){
+      renderTabs(city);
+      const groups = data[city];
+      dirEl.innerHTML = '';
+      if(!groups || Object.keys(groups).length===0){
+        dirEl.innerHTML = `<h2 class='section-title'>${city}</h2><p>Resources coming soon for this area.</p>`;
+        return;
+      }
+      for(const section of Object.keys(groups)){
+        const h = document.createElement('h2'); h.className='section-title'; h.textContent = section; dirEl.appendChild(h);
+        const wrap = document.createElement('div'); wrap.className='grid'; dirEl.appendChild(wrap);
+        groups[section].forEach(item => {
+          const card = document.createElement('div'); card.className='col col-6 card';
+          const phone = item.phone ? item.phone : '<span class="muted">Check site</span>';
+          const notes = item.notes ? `<div class="row"><span class="label">Notes</span><span>${item.notes}</span></div>` : '';
+          card.innerHTML = `<h3>${item.name}</h3>
+            <div class="row"><span class="label">Website</span><a href="${item.url}">${item.url.replace('https://','').replace('http://','')}</a></div>
+            <div class="row"><span class="label">Phone</span><span>${phone}</span></div>
+            ${notes}`;
+          wrap.appendChild(card);
+        });
+      }
+    }
+
+    render(cities[0]);
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    })
+    
+
+   
+  </script>
+</body>
+</html>
